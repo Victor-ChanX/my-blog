@@ -6,11 +6,12 @@ const NavigationBar = (props) => {
   return (
     <div className="bg-gray-50 text-black p-4">
       <div className="container mx-auto flex justify-between items-center">
-        <div className="flex items-center">
+        <div className="flex items-center space-x-3">
           <Avatar>
-            <AvatarImage src="https://github.com/shadcn.png"/>
+            <AvatarImage src="/my.png"/>
             <AvatarFallback>V</AvatarFallback>
           </Avatar>
+          <div className={'font-bold'}>Victor小破站</div>
         </div>
         <nav className="hidden md:flex space-x-4">
           {props.list.map(item => (
