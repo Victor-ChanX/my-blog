@@ -3,6 +3,11 @@ import React, {useEffect, useState} from 'react';
 import Image from 'next/image'
 import {CalendarDaysIcon, ChatBubbleLeftRightIcon, HomeModernIcon, SparklesIcon} from '@heroicons/react/24/solid'
 import fetchWrapper from '/lib/request'
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "@/components/ui/hover-card"
 
 const HomeComponent = () => {
   // articleList
@@ -31,29 +36,23 @@ const HomeComponent = () => {
       .catch(error => {
         console.error(error);
       });
-  }, []);
 
-  useEffect(() => {
-    setPersonalInformation({
-        name: '测试',
-        englishName: 'ceshi',
-        email: 'ceshi@gmail.com',
-        base: 'London',
-        attributes: [
-          {name: 'Articles', number: '4'},
-          {name: 'Classification', number: '4'},
-          {name: 'Project', number: '4'},
-        ]
-      }
-    )
+    fetchWrapper.get('users/UserInfoViewSet/?id=1')
+      .then(data => {
+        console.log(data);
+        setPersonalInformation(data.data);
+      })
+      .catch(error => {
+        console.error(error);
+      });
   }, []);
 
   return (
-    <div className={'flex flex-row justify-around'}>
+    <div className={'flex flex-row justify-center'}>
       <div
-        className={'mr-10 mt-10 ml-20 h-96 flex flex-col w-80 bg-gray-50 text-black p-4 items-center shadow-xl space-y-2 rounded-lg hover:shadow-2xl'}>
+        className={'mr-10 mt-10 ml-20 h-96 flex flex-col w-80 bg-gray-50 text-black p-4 items-center shadow-xl space-y-4 rounded-lg hover:shadow-2xl'}>
         <Image src='/my.png' alt='my' width={200} height={200} className={'rounded-full h-40 w-40'}/>
-        <div className={'text-lg font-bold'}>{personalInformation.englishName}</div>
+        {/*<div className={'text-lg font-bold'}>{personalInformation.englishName}</div>*/}
         <div className={'text-lg font-bold'}>{personalInformation.name}</div>
         <div className={'text-sm flex items-center space-x-1'}>
           <ChatBubbleLeftRightIcon className={'w-3 h-3 '}/>
@@ -64,13 +63,34 @@ const HomeComponent = () => {
           <div>{personalInformation.base}</div>
         </div>
 
-        <div className={'flex space-x-7 text-sm'}>
-          {personalInformation.attributes.map(item => (
-            <div key={item.name} className={'flex flex-col items-center'}>
-              <div className={'text-xs text-gray-400'}>{item.name}</div>
-              <div className={'text-lg'}>{item.number}</div>
-            </div>
-          ))}
+        <div className={'flex space-x-10 text-sm'}>
+          <HoverCard>
+            <HoverCardTrigger>
+              <Image src='/wechat.png' alt='wechat' width={200} height={200} className={'h-8 w-8'}></Image>
+            </HoverCardTrigger>
+            <HoverCardContent>
+              {personalInformation.wechat}
+            </HoverCardContent>
+          </HoverCard>
+
+          <HoverCard>
+            <HoverCardTrigger>
+              <Image src='/whatsapp.png' alt='whatsapp' width={200} height={200} className={'h-8 w-8'}></Image>
+            </HoverCardTrigger>
+            <HoverCardContent>
+              {personalInformation.whatsapp}
+            </HoverCardContent>
+          </HoverCard>
+
+          <HoverCard>
+            <HoverCardTrigger>
+              <Image src='/github.png' alt='github' width={200} height={200} className={'h-8 w-8'}></Image>
+            </HoverCardTrigger>
+            <HoverCardContent>
+              {personalInformation.github}
+            </HoverCardContent>
+          </HoverCard>
+
         </div>
       </div>
 
